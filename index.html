@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Condom Kit Order Form</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <style>
+        /* Custom styles */
+        @import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+        * { margin: 0; padding: 0; }
+
+        html {
+            height: 100%;
+            background: linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6));
+        }
+
+        body {
+            font-family: montserrat, arial, verdana;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #msform {
+            width: 500px;
+            margin: 50px auto;
+            text-align: center;
+            position: relative;
+        }
+
+        #msform fieldset {
+            background: white;
+            border: none;
+            border-radius: 3px;
+            box-shadow: 0 0 25px 1px rgba(0, 0, 0, 0.4);
+            padding: 25px 30px;
+            box-sizing: border-box;
+            width: 80%;
+            margin: 0 10%;
+            position: relative;
+        }
+label {
+    display: block; /* Ensure label is not creating inline-box space */
+    margin: 0;
+}
+ 
+        h2.fs-title {
+          margin-bottom: 10px; /* Adjust spacing as needed */
+        }
+
+      h3.fs-subtitle {
+    margin-bottom: 10px; /* Optional: Adjust further if needed */
+}
+
+ 
+   
+
+
+        #msform input, #msform textarea, #msform label {
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-bottom: 25px; /* Increased spacing between fields */
+            width: 100%;
+            box-sizing: border-box;
+            font-family: montserrat;
+            color: #2C3E50;
+            font-size: 13px;
+        }
+
+        .radio-group {
+    display: flex; /* Align items horizontally */
+    gap: 20px; /* Add space between the pairs (button + label) */
+}
+
+.radio-group div {
+    display: flex; /* Ensure radio button and label are aligned */
+    align-items: center; /* Vertical alignment of radio and label */
+    gap: 5px; /* Add space between the radio button and label */
+}
+
+.radio-group input[type="radio"] {
+    margin: 0; /* Remove unnecessary spacing */
+}
+
+.radio-group label {
+    margin: 0;
+    cursor: pointer; /* Make the label clickable */
+}
+
+        #msform .action-button {
+            width: 100px;
+            background: #27AE60;
+            font-weight: bold;
+            color: white;
+            border: 0 none;
+            border-radius: 1px;
+            cursor: pointer;
+            padding: 10px;
+            margin: 10px 5px;
+            font-size: 14px;
+        }
+
+        #msform .action-button:hover, #msform .action-button:focus {
+            box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
+        }
+
+        #successMessage {
+            display: none;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #27AE60;
+            margin-top: 20px;
+        }
+
+
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0); /* Black overlay with 50% opacity */
+    z-index: -1;
+}
+    </style>
+</head>
+<body>
+    <form id="msform">
+        <fieldset>
+            <h2 class="fs-title">Condom Kit Order Form</h2>
+            <h3 class="fs-subtitle">Please fill in the details below</h3>
+
+            <input type="text" id="name" name="name" placeholder="Full Name" required />
+            <input type="text" id="address" name="address" placeholder="Address" required />
+            <input type="number" id="age" name="age" placeholder="Age" required />
+            <input type="text" id="contactInfo" name="contactInfo" placeholder="Contact Info (Optional)" />
+
+            <label>Are you a care taker at nursing home?</label>
+            <div class="radio-group">
+                <div>
+                    <input type="radio" id="careTakerYes" name="careTaker" value="yes" required />
+                    <label for="careTakerYes">Yes</label>
+                </div>
+                <div>
+                    <input type="radio" id="careTakerNo" name="careTaker" value="no" required />
+                    <label for="careTakerNo">No</label>
+                </div>
+            </div>
+
+            <div id="personalOrderSection" style="display: none;">
+                <label>Are the orders for you?</label>
+                <div class="radio-group">
+                    <div>
+                        <input type="radio" id="personalOrderYes" name="personalOrder" value="yes" />
+                        <label for="personalOrderYes">Yes</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="personalOrderNo" name="personalOrder" value="no" />
+                        <label for="personalOrderNo">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <input type="submit" class="action-button" value="Submit" />
+        </fieldset>
+    </form>
+    <div id="successMessage">Thank you for your response, it has been recorded.</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('msform');
+            const successMessage = document.getElementById('successMessage');
+            const personalOrderSection = document.getElementById('personalOrderSection');
+            const careTakerRadios = document.querySelectorAll('input[name="careTaker"]');
+
+            careTakerRadios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    personalOrderSection.style.display = e.target.value === 'no' ? 'block' : 'none';
+
+                    if (e.target.value === 'yes') {
+                        document.querySelectorAll('input[name="personalOrder"]').forEach(radio => {
+                            radio.checked = false;
+                        });
+                    }
+                });
+            });
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const name = document.getElementById('name').value.trim();
+                const address = document.getElementById('address').value.trim();
+                const age = document.getElementById('age').value.trim();
+                const careTakerSelected = document.querySelector('input[name="careTaker"]:checked');
+                const personalOrderSelected = document.querySelector('input[name="personalOrder"]:checked');
+
+                if (!name || !address || !age || !careTakerSelected || 
+                    (careTakerSelected.value === 'no' && !personalOrderSelected)) {
+                    alert('Please fill out all required fields');
+                    return;
+                }
+
+                form.style.display = 'none';
+                successMessage.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
