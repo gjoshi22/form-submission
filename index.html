@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+Put your HTML text here<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -71,16 +71,20 @@ label {
             font-size: 13px;
         }
 
-        .radio-group {
-    display: flex; /* Align items horizontally */
-    gap: 20px; /* Add space between the pairs (button + label) */
+       .radio-group {
+    display: flex; /* Align items in a row */
+    justify-content: center; /* Center the radio buttons horizontally */
+    gap: 20px; /* Space between the Yes and No options */
+    margin: 0 auto; /* Center the entire radio group */
+    align-items: center; /* Align radio buttons and labels vertically */
 }
 
 .radio-group div {
     display: flex; /* Ensure radio button and label are aligned */
-    align-items: center; /* Vertical alignment of radio and label */
-    gap: 5px; /* Add space between the radio button and label */
+    align-items: center; /* Vertical alignment */
+    gap: 5px; /* Space between the radio button and its label */
 }
+
 
 .radio-group input[type="radio"] {
     margin: 0; /* Remove unnecessary spacing */
